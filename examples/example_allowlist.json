@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "fixtures": [
+    {
+      "path": "tests/test_detector.py",
+      "strings": ["ghp_FAKEFAKEFAKEFAKEFAKEFAKEFAKEFAKE0000"],
+      "reason": "detector test input, not a real credential"
+    }
+  ],
+  "approved_binaries": [],
+  "syntax_exempt": [
+    {"path": "tests/fixtures/broken.py", "reason": "deliberately invalid input for a parser test"}
+  ]
+}

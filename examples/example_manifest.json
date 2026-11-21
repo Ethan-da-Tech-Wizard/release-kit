@@ -1,0 +1,5 @@
+{
+  "component": "demo",
+  "files": ["scripts/hello.py", "README.md"],
+  "exclude_exceptions": []
+}

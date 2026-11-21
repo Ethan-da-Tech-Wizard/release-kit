@@ -1,0 +1,10 @@
+# Example EXCLUDE_LIST.txt: path patterns that must NEVER be released.  Copy it to <release root>/_privacy/EXCLUDE_LIST.txt
+# and edit.  Format: whitespace-separated patterns; "#" starts a comment; "(...)" is a note and is ignored.
+#   dir/        a directory (matches that folder name anywhere in the path)
+#   *.ext       a glob on file names
+#   a/b         a path prefix
+# A manifest can still release one excluded path on purpose via "exclude_exceptions" (recorded in ANNOTATIONS.json).
+private/  secrets/  .env/  .venv/  node_modules/  __pycache__/  .git/
+*.pyc *.log *.sqlite *.db *.pem *.key
+*.pdf *.docx *.xlsx *.pptx *.zip *.gz *.png *.jpg
+notes_private.md

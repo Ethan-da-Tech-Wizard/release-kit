@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.pyo
+# private files must never be committed
+*.private.json
+*.private
+values*.json
+restore*.json
+annotations.private/
+.env
+.DS_Store

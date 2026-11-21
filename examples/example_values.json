@@ -1,0 +1,9 @@
+{
+  "salt": "EXAMPLE-ONLY-DO-NOT-USE-generate-your-own",
+  "values": {
+    "OWNER_NAME": "Quillon Marbury",
+    "OWNER_HANDLE": "qmarbury7",
+    "HOST": ["plumbox-7", "tealbox-2"]
+  },
+  "allow_emails": ["help@example.org"]
+}
