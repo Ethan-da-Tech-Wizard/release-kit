@@ -2,7 +2,7 @@
 
 Runs a command (usually a unit-test suite) in layered isolation and writes a receipt that states which layers were verified active. Stdlib only, Python 3.9+, no network, no sqlite.
 
-    python3 tools/hermetic_run.py --src path/to/component --out receipt.json -- python3 -B -m unittest discover -s scripts -p 'test_*.py'
+    python3 hermetic_run.py --src path/to/component --out receipt.json -- python3 -B -m unittest discover -s scripts -p 'test_*.py'
 
 Point `-s` at the folder that really holds the tests (`scripts/` in the example). A wrong folder runs ZERO tests: unittest then still prints `Ran 0 tests ... OK` and exits 0, which would otherwise earn an `OS_ENFORCED` receipt for nothing. hermetic_run therefore scans the full output for `Ran 0 tests` / `collected 0 items` / `no tests ran`, sets `zero_tests: true` and a `warning` in the receipt, prints `WARNING: the command ran 0 tests`, and turns a command exit 0 into exit 4. `--allow-zero-tests` switches that off (for commands that are not test runners).
 

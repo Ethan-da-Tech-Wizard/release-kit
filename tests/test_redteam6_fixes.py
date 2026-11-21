@@ -525,7 +525,7 @@ class TestF8RestoreMapLock(unittest.TestCase):
 
 # ------------------------------------------------------------------------------------------------------- F10 / LOW-1
 class TestDocsAndExamples(unittest.TestCase):
-    README = (_fx.TOOLS / "README.md").read_text(encoding="utf-8")
+    README = (_fx.TOOLS / "docs" / "REFERENCE.md").read_text(encoding="utf-8")  # the full reference moved here from the top-level README
 
     def test_f10_readme_column_text_matches_the_generated_page(self):
         self.assertNotIn("(placeholder, meaning, what to put, file:line)", self.README)
