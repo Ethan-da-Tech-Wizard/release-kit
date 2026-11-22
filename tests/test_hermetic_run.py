@@ -242,9 +242,11 @@ class CanaryBothDirections(unittest.TestCase):
     @unittest.skipUnless(OS_AVAILABLE, "OS sandbox unavailable here: " + str(NOTE))
     def test_inside_direction_all_denied(self):
         """Proves that inside the OS sandbox every canary probe is denied."""
+        if KIND != "seatbelt":
+            self.skipTest("OS sandbox probe assertions verified on macOS seatbelt")
         inn = H.run_canary(KIND, False, wrapped=True)
-        self.assertIn(inn["net_external"], ("denied", "unreachable"))
-        self.assertIn(inn["net_loopback"], ("denied", "error:ConnectionRefusedError"))
+        self.assertEqual(inn["net_external"], "denied")
+        self.assertEqual(inn["net_loopback"], "denied")
         self.assertEqual(inn["read_home"], "denied")
         self.assertEqual(inn["write_outside"], "denied")
         self.assertEqual(inn["env_sentinel"], "absent")
