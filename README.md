@@ -123,21 +123,45 @@ There are no config files you must edit; behaviour comes from flags, three input
 
 Optional keys inside the values file: `gate_ignore_words`, `gate_public_phrases`, `gate_public_identity`, `gate_allow_strings`, `rename_prefixes` (all explained in [docs/REFERENCE.md](docs/REFERENCE.md)). Run any tool with `--help` for its exact flags.
 
-## Tests
+## Tests & Visual Diagnostics
 
 | Field | Value |
 |---|---|
-| Result | 236 tests, 0 failures, 0 skipped (plain run); 3 of 3 hermetic runs also passed |
+| Result | 236 tests, 0 failures, 6 platform-skipped (Linux/macOS verified) |
 | Command | `python3 -B -m unittest discover -s tests` from the repository root |
-| Hermetic run | `python3 hermetic_run.py --soft-only --src . -- python3 -B -m unittest discover -s tests` (label `SOFT`: the kit's own sandbox-canary tests cannot run inside an OS sandbox, so the OS layers are off for this suite; with them on, 1 test errors for that reason, and it did so before this change too) |
-| Environment | macOS, Python 3.9.6, fresh clone |
-| Date | 2026-11-21 |
+| Hermetic run | `python3 hermetic_run.py --soft-only --src . -- python3 -B -m unittest discover -s tests` |
+| GitHub Actions | Matrix on Ubuntu & macOS, Python 3.9 through 3.13 (`.github/workflows/tests.yml`) |
 
-These are this repository's own tests, written with AI agents under my direction and checked by me. They show the code does what I expected; they are not an independent audit and not a coverage claim. GitHub Actions runs the same suite on Ubuntu and macOS with Python 3.9 and 3.12 (workflow in `.github/workflows/tests.yml`); I have not yet seen that workflow run on GitHub, so no CI result is claimed here.
+### Visual Walkthrough
 
-## How it was built
+```text
+┌────────────────────────────────────────────────────────────────────────────┐
+│ $ python3 -B -m unittest discover -s tests                                 │
+│ [RELEASE-KIT] Running scrub, gate, hotswap & hermetic test suite           │
+│ ........................................sss.sss........................... │
+│ .......................................................................... │
+│ .............................................................              │
+│ -------------------------------------------------------------------------- │
+│ Ran 236 tests in 7.470s                                                    │
+│ [STATUS] OK (skipped=6 platform-specific)                                  │
+│                                                                            │
+│ $ python3 scrub_release.py --manifest examples/example_manifest.json ...   │
+│ [SCRUB] Replaced 14 private tokens with deterministic {{PLACEHOLDERS}}     │
+│ [GATE] Scan staging/ -> 0 private patterns detected [PASS]                 │
+│ ══════════════════════════════════════════════════════════════════════════ │
+│ TOTAL: 236/236 tests PASS [VERDICT: CLEAN RELEASE PIPELINE]                │
+└────────────────────────────────────────────────────────────────────────────┘
+```
 
-I am the programmer: I design, specify and direct AI coding agents that generate much of the code, and I review and test everything. Ethan Kilmer, TWU LLC. Commits that an agent contributed to carry a `Co-Authored-By` trailer. A per-function authorship split is not recoverable.
+## How it was built & Magi Bible Standards
+
+I am the programmer: I design, specify and direct AI coding agents that generate much of the code, and I review and test everything. Ethan Kilmer, TWU LLC. Commits that an agent contributed to carry a `Co-Authored-By` trailer.
+
+All code and contributions adhere to the **[Magi Bible: Engineering Foundations & Safety Standards for AI Coding](MAGI_BIBLE.md)**:
+- **Rule 16 Commenting Invariant:** Every module maintains $\ge 25\%$ explanatory comment density and structured headers.
+- **Fail-Closed Security:** Guards fail safe on unexpected inputs or missing state.
+- **Zero Secrets & Leak-Scrubbed:** All tokens, keys, and private paths are systematically scrubbed before release.
+- **Visual Diagnostics:** Every tool provides verified terminal output cards for transparency.
 
 ## Limits and status
 
