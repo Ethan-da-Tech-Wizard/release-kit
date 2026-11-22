@@ -132,7 +132,15 @@ Optional keys inside the values file: `gate_ignore_words`, `gate_public_phrases`
 | Hermetic run | `python3 hermetic_run.py --soft-only --src . -- python3 -B -m unittest discover -s tests` |
 | GitHub Actions | Matrix on Ubuntu & macOS, Python 3.9 through 3.13 (`.github/workflows/tests.yml`) |
 
-### Visual Walkthrough
+### Visual Walkthrough & Diagnostics
+
+<p align="center">
+  <img src="docs/assets/release_pipeline_workflow.svg" alt="Release Kit End-to-End Pipeline Execution" width="860">
+</p>
+
+<p align="center">
+  <img src="docs/assets/release_gate_verification.svg" alt="Release Gate Security & Scrubbing Verification" width="860">
+</p>
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────────┐
@@ -157,7 +165,9 @@ Optional keys inside the values file: `gate_ignore_words`, `gate_public_phrases`
 
 I am the programmer: I design, specify and direct AI coding agents that generate much of the code, and I review and test everything. Ethan Kilmer, TWU LLC. Commits that an agent contributed to carry a `Co-Authored-By` trailer.
 
-All code and contributions adhere to the **[Magi Bible: Engineering Foundations & Safety Standards for AI Coding](MAGI_BIBLE.md)**:
+All code and contributions adhere to the **[Magi Bible: Engineering Foundations & Safety Standards for AI Coding](MAGI_BIBLE.md)** and **[MAGI_LOOK_HERE.md](MAGI_LOOK_HERE.md)**:
+- **[MAGI_LOOK_HERE.md](MAGI_LOOK_HERE.md)**: Universal contributor & AI agent onboarding guide, visual walkthrough requirements, zero-PII validation rules.
+- **[MAGI_BIBLE.md](MAGI_BIBLE.md)**: Core engineering foundations, multi-seat governance, and verification checklists.
 - **Rule 16 Commenting Invariant:** Every module maintains $\ge 25\%$ explanatory comment density and structured headers.
 - **Fail-Closed Security:** Guards fail safe on unexpected inputs or missing state.
 - **Zero Secrets & Leak-Scrubbed:** All tokens, keys, and private paths are systematically scrubbed before release.
