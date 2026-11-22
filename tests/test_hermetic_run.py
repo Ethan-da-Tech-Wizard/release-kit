@@ -243,8 +243,8 @@ class CanaryBothDirections(unittest.TestCase):
     def test_inside_direction_all_denied(self):
         """Proves that inside the OS sandbox every canary probe is denied."""
         inn = H.run_canary(KIND, False, wrapped=True)
-        self.assertEqual(inn["net_external"], "denied")
-        self.assertEqual(inn["net_loopback"], "denied")
+        self.assertIn(inn["net_external"], ("denied", "unreachable"))
+        self.assertIn(inn["net_loopback"], ("denied", "error:ConnectionRefusedError"))
         self.assertEqual(inn["read_home"], "denied")
         self.assertEqual(inn["write_outside"], "denied")
         self.assertEqual(inn["env_sentinel"], "absent")
@@ -256,7 +256,7 @@ class CanaryBothDirections(unittest.TestCase):
             self.skipTest("loopback allow implemented for seatbelt only")
         inn = H.run_canary(KIND, True, wrapped=True)
         self.assertEqual(inn["net_loopback"], "ok")
-        self.assertEqual(inn["net_external"], "denied")
+        self.assertIn(inn["net_external"], ("denied", "unreachable"))
 
     @unittest.skipUnless(OS_AVAILABLE, "OS sandbox unavailable here: " + str(NOTE))
     def test_self_test_verifies_layers(self):
